@@ -29,9 +29,14 @@ class HitMapView(MatplotView):
 
         else:
             cents = som.bmu_ind_to_xy(np.arange(0, msz[0]*msz[1]))
-            self._set_labels(cents, ax, codebook)
+            #self._set_labels(cents, ax, codebook)
 
-        plt.imshow(codebook.reshape(msz[0], msz[1])[::], alpha=.5)
+        data = codebook.reshape(msz[0], msz[1])[::]
+        plt.pcolormesh(data, edgecolors='k', linewidths=1, alpha=.8)
+
+        for y in range(data.shape[0]):
+            for x in range(data.shape[1]):
+                plt.text(x + 0.5, y + 0.5, '%i' % data[y, x], horizontalalignment='center', verticalalignment='center',)
+                
         plt.show()
-
         return cents
